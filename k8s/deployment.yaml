@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hello-devops-app
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: hello-devops
+  template:
+    metadata:
+      labels:
+        app: hello-devops
+    spec:
+      containers:
+      - name: hello-devops
+        image: cyang0196/hello-devops-v2:latest  # 替换为你的镜像
+        ports:
+        - containerPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: hello-devops-service
+spec:
+  selector:
+    app: hello-devops
+  ports:
+  - port: 80
+    targetPort: 80
+  type: LoadBalancer
